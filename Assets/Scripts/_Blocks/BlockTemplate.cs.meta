@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 3b827d64cb0a745e481fa2f2ad590c7f
+timeCreated: 1485826173
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - goodBlockSprite: {instanceID: 0}
+  - badBlockSprite: {instanceID: 0}
+  - itemObject: {instanceID: 0}
+  - itemOptionsObject: {fileID: 1000013445490924, guid: 8c03c5688373e4376bd4cfde7d8cf2b5,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
