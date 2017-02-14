@@ -1,8 +1,10 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/_Blocks/BlockTemplate.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/LevelState.cs">
     <Files>
-      <File FileName="Assets/Scripts/_Blocks/BlockTemplate.cs" Line="99" Column="2" />
+      <File FileName="Assets/LevelManager.cs" Line="21" Column="1" />
+      <File FileName="Assets/Scripts/Player.cs" Line="50" Column="32" />
+      <File FileName="Assets/Scripts/LevelState.cs" Line="18" Column="36" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

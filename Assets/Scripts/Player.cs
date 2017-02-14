@@ -5,6 +5,9 @@ public class Player : MonoBehaviour {
 
 	public BlockManager blockManager;
 	public ObtainedPowerUps obtainedPowerUps;
+	public LevelManager levelManager;
+
+	private Animator anim;
 
 	public GameObject puff;
 
@@ -12,6 +15,7 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		anim = GetComponent<Animator>();
 	}
 
 	void OnCollisionEnter2D (Collision2D col)
@@ -31,12 +35,19 @@ public class Player : MonoBehaviour {
 		}
 
 		if (col.transform.tag == "BadBlock") {
-			Debug.Log("You lost!!!");
-
-			//if lost, then do not collide with any other blocks.
-			transform.GetComponent<BoxCollider2D>().isTrigger = true;
+			Lose ();
 		}
 
+	}
+
+	public void Lose ()
+	{
+		Debug.Log("You lost!!!");
+
+		//if lost, then do not collide with any other blocks.
+		transform.GetComponent<BoxCollider2D>().isTrigger = true;
+		anim.SetBool("playerLost", true);
+		levelManager.GoToLoseScene();
 	}
 
 	void CreateLandingPuff ()

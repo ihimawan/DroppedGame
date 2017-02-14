@@ -18,6 +18,10 @@ public class BlockManager : MonoBehaviour {
 	//the blocks that are available
 	public GameObject[] blockTemplates;
 
+	[SerializeField]
+	[Range(0f,1f)]
+	private float slowDownPercentage = 0.1f; 
+
 	//the puff that appears when the block disappears.
 	public GameObject blockPuff;
 
@@ -34,20 +38,48 @@ public class BlockManager : MonoBehaviour {
 	private bool elongated = false;
 	private bool slowedDown = false;
 
-	public void Elongate(){
-		Debug.Log("Elongate!");
+	public void Elongate ()
+	{
+		if (!elongated) { //if not yet elongated, then elongate.
+			Debug.Log ("Manager:: Elongate!");
+			foreach (BlockTemplate block in GetComponentsInChildren<BlockTemplate>()) {
+				block.Elongate ();
+			}
+
+			elongated = true; //has been elongated.
+		}
+
 	}
 
-	public void UnElongate(){
-		Debug.Log("UnElongate!");
+	public void UnElongate ()
+	{
+		if (elongated) { //if has been elongated, then unelongate.
+			Debug.Log ("Manager:: UnElongate!");
+			foreach (BlockTemplate block in GetComponentsInChildren<BlockTemplate>()) {
+				block.UnElongate ();
+			}
+
+			elongated = false;
+		}
 	}
 
 	public void SlowDown(){
-		Debug.Log("SlowDown!");
+		if (!slowedDown){ //if not yet slowedDown, then slowDown.
+			Debug.Log("Manager:: SlowDown!");
+			BlockTemplate.SlowDown(slowDownPercentage);
+			slowedDown = true;
+		}
+
 	}
 
-	public void UnSlowDown(){
-		Debug.Log("UnSlowDown!");
+	public void UnSlowDown ()
+	{
+		if (slowedDown) { //if slowedDown, then unSlowDown
+			Debug.Log ("Manager:: UnSlowDown!");
+			BlockTemplate.UnSlowDown(slowDownPercentage);
+
+			slowedDown = false;
+		}
 	}
 
 	void Start(){
@@ -88,6 +120,7 @@ public class BlockManager : MonoBehaviour {
 
 	void Update ()
 	{
+
 		if (moveUp) { //if it is supposed to move up
 
 			Vector3 oldPosition = transform.position;
@@ -134,17 +167,21 @@ public class BlockManager : MonoBehaviour {
 	public void CreateBlock ()
 	{
 		//where to put the block
-		Vector2 position = new Vector2(0, positionOfFirstBlock.y + (-distancePerBlock * (blockAmountOnScreen)));
+		Vector2 position = new Vector2 (0, positionOfFirstBlock.y + (-distancePerBlock * (blockAmountOnScreen)));
 
 //		Debug.Log("Position of new block: " + position);
 
 		//select random existing block
-		int blockType = Random.Range(1, blockTemplates.Length);
+		int blockType = Random.Range (1, blockTemplates.Length);
 
 		//create that type of block and place it
-		GameObject block = (GameObject) Instantiate(blockTemplates[blockType]);
+		GameObject block = (GameObject)Instantiate (blockTemplates [blockType]);
 		block.transform.parent = transform;
 		block.transform.position = position;
+
+		if (elongated) {
+			block.transform.Find("blockImg").localScale += new Vector3(BlockTemplate.getLengthFactor(), 0,0); 
+		}
 
 	}
 

@@ -6,6 +6,9 @@ public abstract class BlockTemplate : MonoBehaviour {
 	public float speed; //the speed of the block moving
 	public int length;
 
+	protected static float speedFactor = 1f;
+	protected static float lengthFactor = 0.2f;
+
 	public Sprite goodBlockSprite;
 	public Sprite badBlockSprite;
 
@@ -16,6 +19,16 @@ public abstract class BlockTemplate : MonoBehaviour {
 	private GameObject blockImg;
 
 	private bool movingRight;
+
+	public Transform getBlockImg ()
+	{
+		return blockImg.transform;
+	}
+
+	public static float getLengthFactor ()
+	{
+		return lengthFactor;
+	}
 
 	void Awake ()
 	{
@@ -30,15 +43,46 @@ public abstract class BlockTemplate : MonoBehaviour {
 			movingRight = false;
 		}
 
-		speed = Random.Range (4, 9);
+		speed = Random.Range (4, 9) * speedFactor;
 
 		//first, set the block as a bad block.
 		if (transform.tag != "StartingBlock") {
 			SetToBadBlock();
 		}
 
-//		Debug.Log("block has been created. with tag = " + transform.tag);
+	}
 
+	public void Elongate ()
+	{
+		Debug.Log("Block:: Elongate!");
+
+		//????? FIX HERE!!! somehow after the scale is changed, it goes back to normal.
+		//transform.localScale = ... works fine. 
+		//Turns out it's because objects with animators cannot have its scale changed.
+
+		blockImg.transform.localScale += new Vector3(0.2f, 0, 0);
+	}
+
+	public void UnElongate(){
+		Debug.Log("Block:: UnElongate!");
+		blockImg.transform.localScale -= new Vector3(0.2f, 0, 0);
+
+		//play the animation of blockImg
+		//and scale the blockImg
+	}
+
+	public static void SlowDown (float slowDownPercentage)
+	{
+		Debug.Log("Block:: SlowDown by " + slowDownPercentage + "!");
+		//make speed lower by percentage.
+		speedFactor *= slowDownPercentage;
+
+	}
+
+	public static void UnSlowDown(float slowDownPercentage){
+		Debug.Log("Block:: UnSlowDown!");
+		//return speed to normal.
+		speedFactor /= slowDownPercentage;
 	}
 
 	void SetToBadBlock(){
@@ -48,7 +92,6 @@ public abstract class BlockTemplate : MonoBehaviour {
 
 	public void SetToGoodBlock(){
 
-//		Debug.Log("Bad block converted to good block.");
 		SetItem();
 		transform.tag = "GoodBlock";
 		blockImg.GetComponent<SpriteRenderer>().sprite = goodBlockSprite;
@@ -74,23 +117,9 @@ public abstract class BlockTemplate : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter2D (Collider2D col)
+	public void toggleMovingRight ()
 	{
-		
-		if (col.gameObject.tag == "GameBound") { //if it hits the edge of screen, then change direction.
-			movingRight = movingRight ? false : true;
-		}
-	}
-
-	void OnCollisionEnter2D (Collision2D col)
-	{
-
-		//what to do when player hits the specific block?
-		if (col.gameObject.tag == "Player") {
-
-			transform.GetComponent<BounceScript>().StartBouncing();
-		}
-
+		movingRight = movingRight ? false : true;
 	}
 
 	public abstract void moveRight(); //how do you want to move right?

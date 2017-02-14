@@ -1,7 +1,7 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2008
-
-Project("{478143E3-0610-BD0A-E5B5-59DE575C4178}") = "DroppedClone", "Assembly-CSharp.csproj", "{7009C9B3-1C10-202E-E7DB-706EC70FEFFD}"
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DroppedClone", "Assembly-CSharp.csproj", "{7009C9B3-1C10-202E-E7DB-706EC70FEFFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

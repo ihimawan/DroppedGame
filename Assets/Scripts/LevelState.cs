@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class LevelState : MonoBehaviour {
 
@@ -12,9 +13,14 @@ public class LevelState : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		
 		anim = GetComponent<Animator>();
 		scoreText = GetComponent<Text>();
-		score = 0;
+
+		if (SceneManager.GetActiveScene().name == "02 Game"){
+			score = 0;
+		}
+
 		UpdateScoreUI ();
 	}
 
@@ -22,12 +28,12 @@ public class LevelState : MonoBehaviour {
 		score++;
 		UpdateScoreUI ();
 		anim.SetTrigger("updated");
-		anim.SetTrigger("updated");
 	}
 
 	public static void UpdateScoreUI ()
 	{
 		scoreText.text = score.ToString();
+		Debug.Log("score is updated");
 	}
 
 
